@@ -11,7 +11,7 @@ export class TeacherItem extends Component {
         <td>{ this.props.teacher.phone }</td>
         <td>
           <button
-            onClick={this.props.editTeacher.bind(this, this.props.teacher.id)}
+            onClick={this.props.editTeacher.bind(this, this.props.teacher)}
             className="btn btn-info">e
           </button>
         </td>

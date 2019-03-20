@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
 import uuid from 'uuid';
 
-export class AddTeacher extends Component {
-  state = {
-    id: uuid(),
-    name: "",
-    surname: "",
-    phone: "",
-    discipline: "",
-    notes: ""
+export class EditTeacher extends Component {
+  constructor(props) {
+    super(props);
+    const oldTeacher = JSON.parse(localStorage.getItem("editTeacher"));
+    this.state = {
+      id: oldTeacher.id,
+      name: oldTeacher.name,
+      surname: oldTeacher.surname,
+      phone: oldTeacher.phone,
+      discipline: oldTeacher.discipline,
+      notes: oldTeacher.notes
+    }
   }
+
 
   submittable = () => {
     if(!(this.state.phone.match(/\+380\d{9}$/) || this.state.phone === '')) {
@@ -24,7 +29,8 @@ export class AddTeacher extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    this.props.addTeacher(this.state);
+
+    this.props.updateTeacher(this.state);
     this.setState({
       id: uuid(),
       name: "",
@@ -33,7 +39,7 @@ export class AddTeacher extends Component {
       discipline: "",
       notes: ""
     });
-    document.querySelector('#message').innerHTML = '<h4>Teacher has been added to the <a href="/" class="alert-link">List</a></h4>';
+    document.querySelector('#message').innerHTML = "<h4>Teacher has been edited. <a href='/' class='alert-link'>List</a></h4>";
   }
 
   onChange = (e) => {
@@ -96,7 +102,7 @@ export class AddTeacher extends Component {
 
         </div>
         <input className="btn btn-primary" type="submit"
-                value="Add Teacher" onClick={this.onSubmit}
+                value="Edit Teacher" onClick={this.onSubmit}
                 disabled={this.submittable()}
         />
       </form>
@@ -105,4 +111,4 @@ export class AddTeacher extends Component {
   }
 }
 
-export default AddTeacher
+export default EditTeacher

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 export class TeacherItem extends Component {
   render() {
@@ -10,10 +11,11 @@ export class TeacherItem extends Component {
         <td>{ this.props.teacher.discipline }</td>
         <td>{ this.props.teacher.phone }</td>
         <td>
-          <button
+          <Link
             onClick={this.props.editTeacher.bind(this, this.props.teacher)}
-            className="btn btn-info">e
-          </button>
+            className="btn btn-info"
+            to="/edit">e
+          </Link>
         </td>
         <td>
           <button

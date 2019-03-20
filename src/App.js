@@ -1,32 +1,16 @@
 import React, { Component } from 'react';
 import './App.css';
 import AddTeacher from './components/AddTeacher';
+import EditTeacher from './components/EditTeacher';
 import Header from './layout/Header';
 import Teachers from './components/Teachers';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import idGenerator from 'react-id-generator';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       teachers: [
-        {
-          id: idGenerator(),
-          name: "Ivan",
-          surname: "Tavan",
-          discipline: "Math",
-          phone: "+380999333222",
-          notes: "Tall and Bald"
-        },
-        {
-          id: idGenerator(),
-          name: "Stepan",
-          surname: "Martov",
-          discipline: "Physycs",
-          phone: "+380999312352",
-          notes: "Short and Funny"
-        }
       ]
     }
   }
@@ -36,19 +20,14 @@ class App extends Component {
   }
 
   hydrateStateWithLocalStorage() {
-    // for all items in state
     for (let key in this.state) {
-      // if the key exists in localStorage
       if (localStorage.hasOwnProperty(key)) {
-        // get the key's value from localStorage
         let value = localStorage.getItem(key);
 
-        // parse the localStorage string and setState
         try {
           value = JSON.parse(value);
           this.setState({ [key]: value });
         } catch (e) {
-          // handle empty string
           this.setState({ [key]: value });
         }
       }
@@ -56,31 +35,28 @@ class App extends Component {
   }
 
   addTeacher = teacher => {
-    // copy current list of items
     const teachers = [...this.state.teachers];
-
-    // add the new item to the list
     teachers.push(teacher);
-
-    // update state with new list, reset the new item input
     this.setState({ teachers: [...this.state.teachers, teacher] });
-
-    // update localStorage
     localStorage.setItem("teachers", JSON.stringify(teachers));
   }
 
-  editTeacher = teacher => {
-    console.log(teacher);
+  editTeacher = (oldTeacher) => {
+    localStorage.setItem("editTeacher", JSON.stringify(oldTeacher));
   }
 
+  updateTeachers = (teacher) => {
+    const oldTeachers = [...this.state.teachers];
+    const teachers = oldTeachers.filter(t => t.id !== teacher.id);
+    teachers.push(teacher);
+    this.setState({ teachers: teachers });
+    localStorage.setItem("teachers", JSON.stringify(teachers));
+   }
+
   deleteTeacher = id => {
-    // copy current list of items
     const teachers = [...this.state.teachers];
-    // filter out the item being deleted
     const updatedTeachers = teachers.filter(teacher => teacher.id !== id);
-
     this.setState({ teachers: updatedTeachers });
-
     localStorage.setItem("teachers", JSON.stringify(updatedTeachers));
   }
 
@@ -114,6 +90,9 @@ class App extends Component {
           <Route path="/add" render={props =>(
             <AddTeacher addTeacher={this.addTeacher} />
           )} />
+        <Route path="/edit" render={props =>(
+            <EditTeacher editTeacher={this.editTeacher} updateTeacher={this.updateTeachers} />
+        )} />
         </div>
       </div>
       </Router>

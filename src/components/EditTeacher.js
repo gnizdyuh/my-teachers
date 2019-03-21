@@ -4,7 +4,7 @@ import uuid from 'uuid';
 export class EditTeacher extends Component {
   constructor(props) {
     super(props);
-    const oldTeacher = JSON.parse(localStorage.getItem("editTeacher"));
+    const oldTeacher = JSON.parse(localStorage.getItem("editedTeacher"));
     this.state = {
       id: oldTeacher.id,
       name: oldTeacher.name,

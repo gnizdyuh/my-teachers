@@ -2,15 +2,18 @@ import React, { Component } from 'react';
 import uuid from 'uuid';
 
 export class AddTeacher extends Component {
-  state = {
-    id: uuid(),
-    name: "",
-    surname: "",
-    phone: "",
-    discipline: "",
-    notes: ""
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: uuid(),
+      name: "",
+      surname: "",
+      phone: "",
+      discipline: "",
+      notes: ""
+    }
   }
-
+  
   submittable = () => {
     if(!(this.state.phone.match(/\+380\d{9}$/) || this.state.phone === '')) {
       return true;

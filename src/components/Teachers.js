@@ -8,6 +8,7 @@ class Teachers extends Component {
        <TeacherItem
          key={teacher.id}
          teacher={teacher}
+         checkTeacher={this.props.checkTeacher}
          deleteTeacher={this.props.deleteTeacher}
          editTeacher={this.props.editTeacher}
        />

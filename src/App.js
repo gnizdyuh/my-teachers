@@ -3,14 +3,18 @@ import './App.css';
 import AddTeacher from './components/AddTeacher';
 import EditTeacher from './components/EditTeacher';
 import Header from './layout/Header';
+import MenuItems from './layout/MenuItems';
 import Teachers from './components/Teachers';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import remove from 'lodash/remove';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       teachers: [
+      ],
+      checkedTeachers: [
       ]
     }
   }
@@ -42,7 +46,8 @@ class App extends Component {
   }
 
   editTeacher = (oldTeacher) => {
-    localStorage.setItem("editTeacher", JSON.stringify(oldTeacher));
+    localStorage.setItem("editedTeacher", JSON.stringify(oldTeacher));
+    this.setState({ checkedTeachers: [] });
   }
 
   updateTeachers = (teacher) => {
@@ -51,13 +56,35 @@ class App extends Component {
     teachers.push(teacher);
     this.setState({ teachers: teachers });
     localStorage.setItem("teachers", JSON.stringify(teachers));
-   }
+  }
 
   deleteTeacher = id => {
     const teachers = [...this.state.teachers];
-    const updatedTeachers = teachers.filter(teacher => teacher.id !== id);
+    const updatedTeachers = remove(teachers, teacher => teacher.id !== id);
     this.setState({ teachers: updatedTeachers });
     localStorage.setItem("teachers", JSON.stringify(updatedTeachers));
+  }
+
+  deleteTeachers = deleted => {
+    const teachers = [...this.state.teachers];
+    const updatedTeachers = remove(teachers, teacher =>
+      teacher.id !== deleted[0] && teacher.id !== deleted[1]
+      && teacher.id !== deleted[2] && teacher.id !== deleted[3]
+      && teacher.id !== deleted[4] && teacher.id !== deleted[5] // TODO: need to refactor this
+    );
+    this.setState({ checkedTeachers: [] });
+    this.setState({ teachers: updatedTeachers });
+    localStorage.setItem("teachers", JSON.stringify(updatedTeachers));
+  }
+
+  checkTeacher = (id) => {
+    let checked = [...this.state.checkedTeachers];
+    if(checked.includes(id)) {
+      checked = remove(checked, value => value !== id);
+    } else {
+      checked.push(id);
+    }
+    this.setState({ checkedTeachers: checked });
   }
 
   render() {
@@ -65,11 +92,13 @@ class App extends Component {
       <Router>
       <div className="App">
        <Header />
-        <div className="container">
+          <div>
           <Route exact path="/" render={props =>(
+            <div>
               <table className="table">
                 <thead>
                 <tr>
+                  <th></th>
                   <th>Name</th>
                   <th>Surname</th>
                   <th>Discipline</th>
@@ -81,17 +110,22 @@ class App extends Component {
                 <tbody>
                 <Teachers
                   teachers={this.state.teachers}
-                  deleteTeacher={this.deleteTeacher}
+                  checkTeacher={this.checkTeacher}
                   editTeacher={this.editTeacher}
+                  deleteTeacher={this.deleteTeacher}
                 />
               </tbody>
-            </table>
+             </table>
+             <MenuItems checkedTeachers={this.state.checkedTeachers}
+              deleteTeachers={this.deleteTeachers}
+              editTeachers={this.editTeacher}/>
+            </div>
           )} />
           <Route path="/add" render={props =>(
             <AddTeacher addTeacher={this.addTeacher} />
           )} />
         <Route path="/edit" render={props =>(
-            <EditTeacher editTeacher={this.editTeacher} updateTeacher={this.updateTeachers} />
+            <EditTeacher updateTeacher={this.updateTeachers} />
         )} />
         </div>
       </div>

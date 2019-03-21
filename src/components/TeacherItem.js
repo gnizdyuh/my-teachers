@@ -6,6 +6,11 @@ export class TeacherItem extends Component {
   render() {
     return (
       <tr>
+        <td>
+          <input type="checkbox"
+            onChange={this.props.checkTeacher.bind(this, this.props.teacher.id)}
+          />
+        </td>
         <td>{ this.props.teacher.name }</td>
         <td>{ this.props.teacher.surname }</td>
         <td>{ this.props.teacher.discipline }</td>

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
 import AddTeacher from './components/AddTeacher';
+import Teachers from './components/Teachers';
 import EditTeacher from './components/EditTeacher';
 import Header from './layout/Header';
 import MenuItems from './layout/MenuItems';
-import Teachers from './components/Teachers';
+import ClearData from './layout/ClearData';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import remove from 'lodash/remove';
 
@@ -89,12 +90,16 @@ class App extends Component {
     this.setState({ checkedTeachers: checked });
   }
 
+  clearData = () => {
+    this.setState({ teachers: [] });
+  }
+
   render() {
     return (
       <Router>
       <div className="App">
        <Header />
-          <div>
+          <div id="content">
           <Route exact path="/" render={props =>(
             <div>
               <table className="table">
@@ -118,7 +123,7 @@ class App extends Component {
                 />
               </tbody>
              </table>
-             <MenuItems checkedTeachers={this.state.checkedTeachers}
+             <MenuItems teachers={this.state.teachers} checkedTeachers={this.state.checkedTeachers}
               deleteTeachers={this.deleteTeachers}
               editTeachers={this.editTeacher}/>
             </div>
@@ -128,6 +133,9 @@ class App extends Component {
           )} />
         <Route path="/edit" render={props =>(
             <EditTeacher updateTeacher={this.updateTeachers} />
+        )} />
+        <Route path="/clear" render={props =>(
+            <ClearData clearData={this.clearData}/>
         )} />
         </div>
       </div>

@@ -1,27 +1,32 @@
 import React from 'react';
-//import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function MenuItems(props) {
-  const handleDelete = () => {
-    props.deleteTeachers(props.checkedTeachers);
+  let state = {
+    checkedTeachers: props.checkedTeachers,
+    teachers: props.teachers
   }
 
-  /// TODO 
-//   const handleEdit = () => {
-//     console.log(props);
-//     props.editTeacher(props.checkedTeachers);
-//     props.checkedTeachers = [];
-//     //localStorage.setItem("editedTeacher", JSON.stringify(props.checkedTeachers));
-//   }
+  const handleDelete = () => {
+    props.deleteTeachers(state.checkedTeachers);
+    state.checkedTeachers = [];
+  }
 
-  if(props.checkedTeachers.length === 1) {
+  const handleEdit = () => {
+    props.editTeachers(state.checkedTeachers);
+    const needsToEdit = state.teachers.find(teacher => teacher.id === state.checkedTeachers[0]);
+    localStorage.setItem("editedTeacher", JSON.stringify(needsToEdit));
+    state.checkedTeachers = [];
+  }
+
+  if(state.checkedTeachers.length === 1) {
     return (
       <div>
         <button className="btn btn-danger m-2" onClick={handleDelete}>Delete</button>
-        {/* <Link className="btn btn-info" onClick={handleEdit} to="/edit">Edit</Link> */}
+        <Link className="btn btn-info" onClick={handleEdit} to="/edit">Edit</Link>
       </div>
     )
-  } else if(props.checkedTeachers.length > 1){
+  } else if(state.checkedTeachers.length > 1){
     return (
         <div>
             <button className="btn btn-danger m-2" onClick={handleDelete}>Delete</button>
@@ -31,7 +36,5 @@ function MenuItems(props) {
     return <span></span>;
   }
 }
-
-
 
 export default MenuItems;

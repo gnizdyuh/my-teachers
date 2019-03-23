@@ -29,7 +29,6 @@ export class EditTeacher extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-
     this.props.updateTeacher(this.state);
     this.setState({
       id: uuid(),

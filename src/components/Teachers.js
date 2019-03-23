@@ -12,7 +12,7 @@ class Teachers extends Component {
          deleteTeacher={this.props.deleteTeacher}
          editTeacher={this.props.editTeacher}
        />
-    ));
+    ))
   }
 }
 

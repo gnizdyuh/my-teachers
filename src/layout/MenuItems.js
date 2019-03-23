@@ -2,6 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function MenuItems(props) {
+  const cb = document.querySelectorAll(".checkbox_teacher");
+  let checked_count = 0;
+  cb.forEach(checkbox => checkbox.checked ? checked_count++ : "");
+
   let state = {
     checkedTeachers: props.checkedTeachers,
     teachers: props.teachers
@@ -19,14 +23,14 @@ function MenuItems(props) {
     state.checkedTeachers = [];
   }
 
-  if(state.checkedTeachers.length === 1) {
+  if(checked_count === 1) {
     return (
       <div>
         <button className="btn btn-danger m-2" onClick={handleDelete}>Delete</button>
         <Link className="btn btn-info" onClick={handleEdit} to="/edit">Edit</Link>
       </div>
     )
-  } else if(state.checkedTeachers.length > 1){
+  } else if(checked_count > 1){
     return (
         <div>
             <button className="btn btn-danger m-2" onClick={handleDelete}>Delete</button>

@@ -7,7 +7,7 @@ export class TeacherItem extends Component {
     return (
       <tr>
         <td>
-          <input type="checkbox"
+          <input type="checkbox" className="checkbox_teacher"
             onChange={this.props.checkTeacher.bind(this, this.props.teacher.id)}
           />
         </td>

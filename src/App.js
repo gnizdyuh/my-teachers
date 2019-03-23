@@ -118,12 +118,14 @@ class App extends Component {
                 <Teachers
                   teachers={this.state.teachers}
                   checkTeacher={this.checkTeacher}
+                  
                   editTeacher={this.editTeacher}
                   deleteTeacher={this.deleteTeacher}
                 />
               </tbody>
              </table>
-             <MenuItems teachers={this.state.teachers} checkedTeachers={this.state.checkedTeachers}
+             <MenuItems teachers={this.state.teachers} 
+              checkedTeachers={this.state.checkedTeachers}
               deleteTeachers={this.deleteTeachers}
               editTeachers={this.editTeacher}/>
             </div>

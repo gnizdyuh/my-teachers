@@ -61,26 +61,10 @@ class App extends Component {
   deleteTeacher = id => {
     const teachers = [...this.state.teachers];
     const updatedTeachers = remove(teachers, teacher => teacher.id !== id);
-<<<<<<< HEAD
-=======
     this.setState({ teachers: updatedTeachers });
     localStorage.setItem("teachers", JSON.stringify(updatedTeachers));
   }
 
-  deleteTeachers = deleted => {
-    const teachers = [...this.state.teachers];
-    const updatedTeachers = remove(teachers, teacher =>
-      teacher.id !== deleted[0] && teacher.id !== deleted[1]
-      && teacher.id !== deleted[2] && teacher.id !== deleted[3]
-      && teacher.id !== deleted[4] && teacher.id !== deleted[5] // TODO: need to refactor this
-    );
-    this.setState({ checkedTeachers: [] });
->>>>>>> 8bc0e08850ab2f33cee455f70a33ebf9602171ff
-    this.setState({ teachers: updatedTeachers });
-    localStorage.setItem("teachers", JSON.stringify(updatedTeachers));
-  }
-
-<<<<<<< HEAD
   deleteTeachers = arrayOfDeletedID => {
     let teachers = [...this.state.teachers];
     arrayOfDeletedID.forEach(deletedTeacherID => 
@@ -96,9 +80,6 @@ class App extends Component {
   }
 
   checkTeacher = id => {
-=======
-  checkTeacher = (id) => {
->>>>>>> 8bc0e08850ab2f33cee455f70a33ebf9602171ff
     let checked = [...this.state.checkedTeachers];
     if(checked.includes(id)) {
       checked = remove(checked, value => value !== id);
